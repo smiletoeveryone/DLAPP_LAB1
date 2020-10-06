@@ -6,11 +6,23 @@ import numpy as np
 
 image = cv2.imread("penquin.jpg")
 # newimg = cv2.resize(image, (600, 400))
-cv2.imwrite("origin.jpg", image)
-image_1 = cv2.imread("origin.jpg")
-image_1a = cv2.resize(image_1, (600, 400))
+# cv2.imwrite("origin.jpg", image)
+# image_1 = cv2.imread("origin.jpg")
+image_1a = cv2.resize(image, (600, 400))
 
-(B,G,R) = cv2.split(image)
+zeros = np.zeros(image_1a.shape[:2], dtype="uint8")
+(B,G,R) = cv2.split(image_1a)
+R = cv2.merge([zeros, zeros, R])
+G = cv2.merge([zeros, G, zeros])
+B = cv2.merge([B, zeros, zeros])
+rbg_split = np.concatenate((B,G,R),axis=1)
+cv2.imshow("Split RBG",rbg_split)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+'''
+
 cv2.imwrite("blue.jpg", B)
 cv2.imwrite("green.jpg", G)
 cv2.imwrite("red.jpg", R)
@@ -27,3 +39,4 @@ cv2.imshow("imghstack",imghstack)
 
 if(cv2.waitKey(0)==27):
     cv2.destroyAllWindows()
+'''
